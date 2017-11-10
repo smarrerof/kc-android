@@ -15,4 +15,8 @@ object Tables {
     fun add(table: Table) {
         tables.add(table)
     }
+
+    fun add(mutableList: MutableList<Table>) {
+        tables.addAll(mutableList)
+    }
 }

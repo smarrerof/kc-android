@@ -8,6 +8,7 @@ import com.sergiomarrero.dishr.R
 import com.sergiomarrero.dishr.common.JsonRequest
 import com.sergiomarrero.dishr.model.Table
 import com.sergiomarrero.dishr.model.Tables
+import com.sergiomarrero.dishr.repository.TableRepository
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
@@ -52,17 +53,8 @@ class TableListActivity : AppCompatActivity() {
     }
 
     private fun downloadTables() {
-        val request = JsonRequest("https://dishrapp.firebaseio.com/tables.json")
-        val json = request.run()
-        val jsonRoot = JSONArray(json)
-
-        for (index in 0..jsonRoot.length() - 1) {
-            val table = jsonRoot.getJSONObject(index)
-
-            val id = table.getString("id")
-            val name = table.getString("name")
-
-            Tables.add(Table(id, name))
-        }
+        val repository = TableRepository()
+        val tables = repository.get()
+        Tables.add(tables)
     }
 }
