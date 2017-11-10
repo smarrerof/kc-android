@@ -5,8 +5,15 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.sergiomarrero.dishr.R
+import com.sergiomarrero.dishr.common.JsonRequest
 import com.sergiomarrero.dishr.model.Table
 import com.sergiomarrero.dishr.model.Tables
+import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.bg
+import org.json.JSONArray
+import org.json.JSONObject
 
 
 class TableListActivity : AppCompatActivity() {
@@ -17,7 +24,18 @@ class TableListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_table_list)
 
-        setAdapter()
+        //setAdapter()
+
+        // Get tables from API
+        async(UI) {
+            val task: Deferred<Unit> = bg {
+                downloadTables()
+            }
+
+            task.await()
+
+            setAdapter()
+        }
 
         // Handle click
         listView.setOnItemClickListener { _, _, position, _ ->
@@ -33,5 +51,18 @@ class TableListActivity : AppCompatActivity() {
         listView.adapter = ArrayAdapter<Table>(this, android.R.layout.simple_list_item_1, Tables.toArray())
     }
 
+    private fun downloadTables() {
+        val request = JsonRequest("https://dishrapp.firebaseio.com/tables.json")
+        val json = request.run()
+        val jsonRoot = JSONArray(json)
 
+        for (index in 0..jsonRoot.length() - 1) {
+            val table = jsonRoot.getJSONObject(index)
+
+            val id = table.getString("id")
+            val name = table.getString("name")
+
+            Tables.add(Table(id, name))
+        }
+    }
 }
