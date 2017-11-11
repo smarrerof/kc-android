@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 
 import android.widget.TextView
 import com.sergiomarrero.dishr.R
@@ -19,13 +20,21 @@ class DishRecyclerViewAdapter(val dishes: Dishes?): RecyclerView.Adapter<DishRec
     inner class DishViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         val name = itemView.findViewById<TextView>(R.id.dish_name)
+        val image = itemView.findViewById<ImageView>(R.id.dish_image)
         val price = itemView.findViewById<TextView>(R.id.dish_price)
         val allergens = itemView.findViewById<TextView>(R.id.dish_allergens)
 
         fun bindDish(dish: Dish) {
             name.text = dish.name
+            image.setImageResource(when (dish.image) {
+                "dish_01" -> R.drawable.dish_01
+                "dish_02" -> R.drawable.dish_02
+                "dish_03" -> R.drawable.dish_03
+                "dish_04" -> R.drawable.dish_04
+                else -> R.drawable.dish_unknown
+            })
             price.text = "Precio: ${dish.price}€"
-            dish.allergens.forEach { item ->
+            dish.allergens?.forEach { item ->
                 allergens.append(item + " ")
             }
         }
