@@ -4,11 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
+import android.support.design.widget.Snackbar
+import android.view.View
 import com.sergiomarrero.dishr.R
 import com.sergiomarrero.dishr.model.Table
 
 
 class TableDetailActivity : AppCompatActivity() {
+
+    val addDishButton by lazy { findViewById<FloatingActionButton>(R.id.add_dish_button) }
 
     companion object {
         val EXTRA_TABLE = "EXTRA_TABLE"
@@ -28,5 +33,11 @@ class TableDetailActivity : AppCompatActivity() {
 
         // Get arguments from intent
         table = intent.getSerializableExtra(EXTRA_TABLE) as Table
+
+        // Add dish
+        addDishButton.setOnClickListener { v: View ->
+            Snackbar.make(v, "Hemos hecho click", Snackbar.LENGTH_LONG)
+                    .show()
+        }
     }
 }
