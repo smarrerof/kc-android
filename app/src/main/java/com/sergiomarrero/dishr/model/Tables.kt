@@ -12,8 +12,8 @@ object Tables {
 
     fun toArray() = tables.toTypedArray()
 
-    fun add(table: Table) {
-        tables.add(table)
+    fun add(element: Table) {
+        tables.add(element)
     }
 
     fun add(mutableList: MutableList<Table>) {

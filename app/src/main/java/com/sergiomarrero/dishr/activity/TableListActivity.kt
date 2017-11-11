@@ -3,6 +3,7 @@ package com.sergiomarrero.dishr.activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.ListAdapter
 import android.widget.ListView
 import com.sergiomarrero.dishr.R
 import com.sergiomarrero.dishr.common.JsonRequest
@@ -25,8 +26,6 @@ class TableListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_table_list)
 
-        //setAdapter()
-
         // Get tables from API
         async(UI) {
             val task: Deferred<Unit> = bg {
@@ -41,9 +40,12 @@ class TableListActivity : AppCompatActivity() {
         // Handle click
         listView.setOnItemClickListener { _, _, position, _ ->
             // Get selected table
-            val selectedTable = Tables[position]
+            //val selectedTable = Tables[position]
             // Move to table activity
-            val intent = TableDetailActivity.intent(this, selectedTable)
+            //val intent = TableDetailActivity.intent(this, selectedTable)
+            //startActivity(intent)
+
+            val intent = DishListActivity.intent(this)
             startActivity(intent)
         }
     }
