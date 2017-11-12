@@ -39,10 +39,8 @@ class TableListActivity : AppCompatActivity() {
 
         // Handle click
         listView.setOnItemClickListener { _, _, position, _ ->
-            // Get selected table
-            val selectedTable = Tables[position]
             // Move to table activity
-            val intent = TableDetailActivity.intent(this, selectedTable)
+            val intent = TableDetailActivity.intent(this, position)
             startActivity(intent)
 
             //val intent = DishListActivity.intent(this)

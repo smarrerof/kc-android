@@ -1,6 +1,9 @@
 package com.sergiomarrero.dishr.model
 
-object Tables {
+import java.io.Serializable
+
+
+object Tables: Serializable {
     private var tables = mutableListOf<Table>()
 
     val count

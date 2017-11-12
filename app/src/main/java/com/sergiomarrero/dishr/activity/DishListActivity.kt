@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import com.sergiomarrero.dishr.R
 import com.sergiomarrero.dishr.adapter.DishRecyclerViewAdapter
+import com.sergiomarrero.dishr.fragment.DishListFragment
 import com.sergiomarrero.dishr.model.Dish
 import com.sergiomarrero.dishr.model.Dishes
 import com.sergiomarrero.dishr.model.Table
@@ -39,10 +40,6 @@ class DishListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dish_list)
 
-        // Configure recyclerView
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.itemAnimator = DefaultItemAnimator()
-
         // Get dishes from API
         async(UI) {
             val task: Deferred<Unit> = bg {
@@ -51,19 +48,20 @@ class DishListActivity : AppCompatActivity() {
 
             task.await()
 
-            setAdapter()
+            if (fragmentManager.findFragmentById(R.id.fragment_dish_list) == null) {
+                val fragment = DishListFragment.newInstance(Dishes.toList())
+                fragmentManager.beginTransaction()
+                        .add(R.id.fragment_dish_list, fragment)
+                        .commit()
+            }
         }
 
         // Handle click
         /*listView.setOnClickListener { v: View? ->
 
         }*/
-    }
 
-    private fun setAdapter() {
-        //listView.adapter = ArrayAdapter<Dish>(this, android.R.layout.simple_list_item_1, Dishes.toArray())
-        val adapter = DishRecyclerViewAdapter(Dishes)
-        recyclerView.adapter = adapter
+
     }
 
     private fun downloadDishes() {

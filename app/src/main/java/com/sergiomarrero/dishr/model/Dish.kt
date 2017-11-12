@@ -1,8 +1,10 @@
 package com.sergiomarrero.dishr.model
 
 import org.json.JSONObject
+import java.io.Serializable
 
-class Dish(var id: String, var name: String, var price: Float, var image: String, var allergens: List<String>) {
+
+class Dish(var id: String, var name: String, var price: Float, var image: String, var allergens: List<String>): Serializable {
 
     companion object {
         fun from(json: JSONObject): Dish {

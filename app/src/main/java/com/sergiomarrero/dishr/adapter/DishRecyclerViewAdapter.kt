@@ -9,10 +9,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.sergiomarrero.dishr.R
 import com.sergiomarrero.dishr.model.Dish
-import com.sergiomarrero.dishr.model.Dishes
 
 
-class DishRecyclerViewAdapter(val dishes: Dishes?): RecyclerView.Adapter<DishRecyclerViewAdapter.DishViewHolder>() {
+class DishRecyclerViewAdapter(val dishes: List<Dish>?): RecyclerView.Adapter<DishRecyclerViewAdapter.DishViewHolder>() {
 
     var onClickListener: View.OnClickListener? = null
 
@@ -52,5 +51,5 @@ class DishRecyclerViewAdapter(val dishes: Dishes?): RecyclerView.Adapter<DishRec
         }
     }
 
-    override fun getItemCount() = dishes?.count ?: 0
+    override fun getItemCount() = dishes?.size ?: 0
 }

@@ -7,6 +7,11 @@
     android:layout_height="match_parent"
     tools:context="com.sergiomarrero.dishr.activity.TableDetailActivity">
 
+    <FrameLayout
+        android:id="@+id/fragment_table_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_dish_button"
         android:layout_width="wrap_content"
