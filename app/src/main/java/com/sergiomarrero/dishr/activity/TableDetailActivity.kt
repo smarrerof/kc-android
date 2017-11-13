@@ -19,6 +19,7 @@ class TableDetailActivity : AppCompatActivity() {
 
     companion object {
         val EXTRA_TABLE = "EXTRA_TABLE"
+        val REQUEST_DISH = 1
 
         fun intent(context: Context, position: Int): Intent {
             val intent = Intent(context, TableDetailActivity::class.java)
@@ -49,13 +50,25 @@ class TableDetailActivity : AppCompatActivity() {
 
         // Add dish
         addDishButton.setOnClickListener { v: View ->
-            Snackbar.make(v, "Hemos hecho click", Snackbar.LENGTH_LONG)
-                    .show()
-
             // Add fake dish
-            val dish = Dish("1", "Hamburguesa gourmet", 14.95f, "dish_01", listOf("1", "2", "3"))
-            table.dishes.add(dish)
-            fragment.refreshDishList()
+            //val dish = Dish("1", "Hamburguesa gourmet", 14.95f, "dish_01", listOf("1", "2", "3"))
+            //table.dishes.add(dish)
+            //fragment.refreshDishList()
+
+            // Start activity (DishListActivity)
+            startActivityForResult(DishListActivity.intent(this), REQUEST_DISH)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_DISH && resultCode == RESULT_OK) {
+            val dish = data?.getSerializableExtra(DishListActivity.EXTRA_DISH) as? Dish
+            if (dish != null) {
+                table.dishes.add(dish)
+                fragment.refreshDishList()
+            }
         }
     }
 }

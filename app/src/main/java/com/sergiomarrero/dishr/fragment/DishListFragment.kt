@@ -1,6 +1,8 @@
 package com.sergiomarrero.dishr.fragment
 
+import android.app.Activity
 import android.app.Fragment
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
@@ -11,7 +13,6 @@ import android.view.ViewGroup
 import com.sergiomarrero.dishr.R
 import com.sergiomarrero.dishr.adapter.DishRecyclerViewAdapter
 import com.sergiomarrero.dishr.model.Dish
-import com.sergiomarrero.dishr.model.Dishes
 import java.io.Serializable
 
 
@@ -31,6 +32,7 @@ class DishListFragment: Fragment() {
         }
     }
 
+    var onDishSelectedListener: OnDishSelectedListener? = null
     lateinit var root: View
     lateinit var recyclerView: RecyclerView
     lateinit var dishes: List<Dish>
@@ -58,12 +60,48 @@ class DishListFragment: Fragment() {
         return root
     }
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        commonAttach(context)
+    }
+
+    @Suppress("OverridingDeprecatedMethod", "DEPRECATION")
+    override fun onAttach(activity: Activity?) {
+        super.onAttach(activity)
+        commonAttach(activity)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        onDishSelectedListener = null
+    }
+
+    fun commonAttach(listener: Any?) {
+        if (listener is OnDishSelectedListener) {
+            onDishSelectedListener = listener
+        }
+    }
+
     fun refreshDishList() {
         setAdapter()
     }
 
     private fun setAdapter() {
-        recyclerView.adapter = DishRecyclerViewAdapter(dishes)
+        // Set the adapter
+        val adapter = DishRecyclerViewAdapter(dishes)
+        recyclerView.adapter = adapter
+
+        // Handle click
+        adapter.onClickListener = View.OnClickListener { v: View? ->
+            val position = recyclerView.getChildAdapterPosition(v)
+            val dish = dishes[position]
+
+            onDishSelectedListener?.onDishSelected(dish)
+        }
+    }
+
+    interface OnDishSelectedListener {
+        fun onDishSelected(dish: Dish?)
     }
 
 }
