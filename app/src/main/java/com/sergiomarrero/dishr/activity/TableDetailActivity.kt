@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
+import android.support.v7.app.AlertDialog
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.TextView
 import com.sergiomarrero.dishr.R
 import com.sergiomarrero.dishr.fragment.DishListFragment
 import com.sergiomarrero.dishr.model.Dish
@@ -64,11 +67,30 @@ class TableDetailActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_DISH && resultCode == RESULT_OK) {
+            // Get dish
             val dish = data?.getSerializableExtra(DishListActivity.EXTRA_DISH) as? Dish
             if (dish != null) {
                 table.dishes.add(dish)
-                fragment.refreshDishList()
+
+                // Get dish notes
+                val dialogView = layoutInflater.inflate(R.layout.dialog_add_dish, null)
+                val dishNotes = dialogView.findViewById<TextView>(R.id.dish_notes)
+
+                AlertDialog.Builder(this)
+                        .setTitle("Añadir notas")
+                        .setMessage("Introduce las notas del cliente")
+                        .setView(dialogView)
+                        .setPositiveButton(android.R.string.ok, { _, _ ->
+                            dish.name = dishNotes.text.toString()
+                            fragment.refreshDishList()
+                        })
+                        .setNegativeButton(android.R.string.cancel, { _, _ ->
+                            fragment.refreshDishList()
+                        })
+                        .show()
+
             }
+
         }
     }
 }

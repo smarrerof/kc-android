@@ -57,9 +57,9 @@ class DishRecyclerViewAdapter(val dishes: List<Dish>?): RecyclerView.Adapter<Dis
                     "altramuces" -> R.drawable.allergen_14_altramuces
                     else -> R.drawable.allergen_01_soja
                 })
-                image.maxWidth = 16
-                image.maxHeight = 16
-                image.adjustViewBounds = true
+                imageView.maxWidth = 96
+                imageView.maxHeight = 96
+                imageView.adjustViewBounds = true
                 allergens.addView(imageView)
             }
         }
