@@ -19,14 +19,13 @@ class DishRecyclerViewAdapter(val dishes: List<Dish>?): RecyclerView.Adapter<Dis
     // ViewHolder
     inner class DishViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
-        val name = itemView.findViewById<TextView>(R.id.dish_name)
         val image = itemView.findViewById<ImageView>(R.id.dish_image)
+        val name = itemView.findViewById<TextView>(R.id.dish_name)
         val price = itemView.findViewById<TextView>(R.id.dish_price)
-        //val allergens = itemView.findViewById<TextView>(R.id.dish_allergens)
         val allergens = itemView.findViewById<LinearLayout>(R.id.dish_allergens)
+        val description = itemView.findViewById<TextView>(R.id.dish_description)
 
         fun bindDish(dish: Dish) {
-            name.text = dish.name
             image.setImageResource(when (dish.image) {
                 "dish_01" -> R.drawable.dish_01
                 "dish_02" -> R.drawable.dish_02
@@ -34,7 +33,8 @@ class DishRecyclerViewAdapter(val dishes: List<Dish>?): RecyclerView.Adapter<Dis
                 "dish_04" -> R.drawable.dish_04
                 else -> R.drawable.dish_unknown
             })
-            price.text = "Precio: ${dish.price}€"
+            name.text = dish.name
+            price.text = "${dish.price}€"
             /*dish.allergens?.forEach { item ->
                 allergens.append(item + " ")
             }*/
@@ -57,11 +57,13 @@ class DishRecyclerViewAdapter(val dishes: List<Dish>?): RecyclerView.Adapter<Dis
                     "altramuces" -> R.drawable.allergen_14_altramuces
                     else -> R.drawable.allergen_01_soja
                 })
-                imageView.maxWidth = 96
-                imageView.maxHeight = 96
+                imageView.maxWidth = 72
+                imageView.maxHeight = 72
                 imageView.adjustViewBounds = true
+                imageView.setPadding(0,0,8,4)
                 allergens.addView(imageView)
             }
+            description.text = dish.description
         }
     }
 

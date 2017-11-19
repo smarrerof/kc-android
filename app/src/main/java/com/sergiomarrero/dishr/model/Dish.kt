@@ -4,7 +4,7 @@ import org.json.JSONObject
 import java.io.Serializable
 
 
-class Dish(var id: String, var name: String, var price: Float, var image: String, var allergens: List<String>): Serializable {
+class Dish(var id: String, var name: String, var price: Float, var image: String, var allergens: List<String>, val description: String): Serializable {
 
     companion object {
         fun from(json: JSONObject): Dish {
@@ -12,6 +12,7 @@ class Dish(var id: String, var name: String, var price: Float, var image: String
             val name = json.getString("name")
             val price = json.getDouble("price").toFloat()
             val image = json.getString("image")
+            val description = json.getString("description")
 
             val allergens: MutableList<String> = mutableListOf()
             if (json.has("allergens")) {
@@ -21,7 +22,7 @@ class Dish(var id: String, var name: String, var price: Float, var image: String
                 }
             }
 
-            return Dish(id, name, price, image, allergens)
+            return Dish(id, name, price, image, allergens, description)
         }
     }
 

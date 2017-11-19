@@ -5,10 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sergiomarrero.dishr.activity.TableDetailActivity">
+    tools:context="com.sergiomarrero.dishr.activity.OrderActivity">
 
-    <FrameLayout
-        android:id="@+id/fragment_table_detail"
+    <ListView
+        android:id="@+id/order_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

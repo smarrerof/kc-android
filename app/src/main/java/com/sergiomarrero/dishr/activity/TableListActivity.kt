@@ -2,11 +2,10 @@ package com.sergiomarrero.dishr.activity
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.widget.ArrayAdapter
-import android.widget.ListAdapter
 import android.widget.ListView
 import com.sergiomarrero.dishr.R
-import com.sergiomarrero.dishr.common.JsonRequest
 import com.sergiomarrero.dishr.model.Table
 import com.sergiomarrero.dishr.model.Tables
 import com.sergiomarrero.dishr.repository.TableRepository
@@ -14,8 +13,6 @@ import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import org.jetbrains.anko.coroutines.experimental.bg
-import org.json.JSONArray
-import org.json.JSONObject
 
 
 class TableListActivity : AppCompatActivity() {
@@ -39,12 +36,9 @@ class TableListActivity : AppCompatActivity() {
 
         // Handle click
         listView.setOnItemClickListener { _, _, position, _ ->
-            // Move to table activity
-            val intent = TableDetailActivity.intent(this, position)
+            // Move to order activity
+            val intent = OrderActivity.intent(this, position)
             startActivity(intent)
-
-            //val intent = DishListActivity.intent(this)
-            //startActivity(intent)
         }
     }
 

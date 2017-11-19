@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.TableDetailActivity" />
-        <activity android:name=".activity.DishListActivity"></activity>
+        <activity android:name=".activity.DishListActivity" />
+        <activity android:name=".activity.OrderActivity"></activity>
     </application>
 
 </manifest>
