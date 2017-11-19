@@ -41,21 +41,21 @@ class DishRecyclerViewAdapter(val dishes: List<Dish>?): RecyclerView.Adapter<Dis
             dish.allergens?.forEach { item ->
                 val imageView = ImageView(itemView.context)
                 imageView.setImageResource(when (item) {
-                    "soja" -> R.drawable.allergen_01_soja
-                    "pescado" -> R.drawable.allergen_02_pescado
-                    "mostaza" -> R.drawable.allergen_03_mostaza
-                    "moluscos" -> R.drawable.allergen_04_moluscos
-                    "lacteos" -> R.drawable.allergen_05_lacteos
-                    "huevos" -> R.drawable.allergen_06_huevos
-                    "sesamo" -> R.drawable.allergen_07_sesamo
-                    "gluten" -> R.drawable.allergen_08_gluten
-                    "frutos" -> R.drawable.allergen_09_frutos_de_cascara
-                    "sulfitos" -> R.drawable.allergen_10_sulfitos
-                    "crustaceos" -> R.drawable.allergen_11_crustaceos
-                    "cacahuetes" -> R.drawable.allergen_12_cacahuetes
-                    "apio" -> R.drawable.allergen_13_apio
-                    "altramuces" -> R.drawable.allergen_14_altramuces
-                    else -> R.drawable.allergen_01_soja
+                    "soja" -> R.drawable.allergen_01_soja_on
+                    "pescado" -> R.drawable.allergen_02_pescado_on
+                    "mostaza" -> R.drawable.allergen_03_mostaza_on
+                    "moluscos" -> R.drawable.allergen_04_moluscos_on
+                    "lacteos" -> R.drawable.allergen_05_lacteos_on
+                    "huevos" -> R.drawable.allergen_06_huevos_on
+                    "sesamo" -> R.drawable.allergen_07_sesamo_on
+                    "gluten" -> R.drawable.allergen_08_gluten_on
+                    "frutos" -> R.drawable.allergen_09_frutos_de_cascara_on
+                    "sulfitos" -> R.drawable.allergen_10_sulfitos_on
+                    "crustaceos" -> R.drawable.allergen_11_crustaceos_on
+                    "cacahuetes" -> R.drawable.allergen_12_cacahuetes_on
+                    "apio" -> R.drawable.allergen_13_apio_on
+                    "altramuces" -> R.drawable.allergen_14_altramuces_on
+                    else -> R.drawable.allergen_01_soja_on
                 })
                 imageView.maxWidth = 72
                 imageView.maxHeight = 72
