@@ -42,14 +42,14 @@ class OrderActivity : AppCompatActivity() {
         setContentView(R.layout.activity_order)
 
         // Get arguments from intent
-        val position = intent.getIntExtra(OrderActivity.EXTRA_TABLE, 0)
-        table = Tables[position]
+        val tableIndex = intent.getIntExtra(OrderActivity.EXTRA_TABLE, 0)
+        table = Tables[tableIndex]
 
         setAdapter()
 
 
         // listView events
-        listView.setOnItemLongClickListener { parent, view, position, id ->
+        listView.setOnItemLongClickListener { _, _, position, _ ->
             AlertDialog.Builder(this)
                     .setTitle("Borrar")
                     .setMessage("¿Está seguro que desea borrar este elemento?")
@@ -66,7 +66,7 @@ class OrderActivity : AppCompatActivity() {
         }
 
         // addButton events
-        addDishButton.setOnClickListener { v: View ->
+        addDishButton.setOnClickListener { _ ->
             /*val dish = Dish("1", "Hamburguesa gourmet", 14.95f, "dish_01", listOf("1", "2", "3"))
             table.order.add(dish, "")
             setAdapter()*/
@@ -109,16 +109,13 @@ class OrderActivity : AppCompatActivity() {
         //listView.adapter = ArrayAdapter<OrderItem>(this, android.R.layout.simple_list_item_1, table.order.toArray())
         listView.adapter = object: ArrayAdapter<OrderItem>(this, R.layout.list_view_item_order, table.order.toArray()) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-                var view = convertView
-                if (view == null) {
-                    view = LayoutInflater.from(context).inflate(R.layout.list_view_item_order, parent, false)
-                }
+                val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.list_view_item_order, parent, false)
 
                 val orderItem = table.order[position]
 
-                val image1 = view!!.findViewById<ImageView>(R.id.image1)
-                val text1 = view!!.findViewById<TextView>(R.id.text1)
-                val text2 = view!!.findViewById<TextView>(R.id.text2)
+                val image1 = view.findViewById<ImageView>(R.id.image1)
+                val text1 = view.findViewById<TextView>(R.id.text1)
+                val text2 = view.findViewById<TextView>(R.id.text2)
 
                 image1.setImageResource(when (orderItem.dish.image) {
                     "dish_01" -> R.drawable.dish_01
@@ -130,7 +127,7 @@ class OrderActivity : AppCompatActivity() {
                 text1.text = orderItem.dish.name
                 text2.text = orderItem.notes
 
-                return view!!
+                return view
             }
         }
     }

@@ -38,7 +38,7 @@ class DishRecyclerViewAdapter(val dishes: List<Dish>?): RecyclerView.Adapter<Dis
             /*dish.allergens?.forEach { item ->
                 allergens.append(item + " ")
             }*/
-            dish.allergens?.forEach { item ->
+            dish.allergens.forEach { item ->
                 val imageView = ImageView(itemView.context)
                 imageView.setImageResource(when (item) {
                     "soja" -> R.drawable.allergen_01_soja_on
