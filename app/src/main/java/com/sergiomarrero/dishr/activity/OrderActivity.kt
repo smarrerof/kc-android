@@ -94,10 +94,6 @@ class OrderActivity : AppCompatActivity() {
                             table.order.add(dish, dishNotes.text.toString())
                             setAdapter()
                         })
-                        .setNegativeButton(android.R.string.cancel, { _, _ ->
-                            table.order.add(dish, "")
-                            setAdapter()
-                        })
                         .show()
 
             }
