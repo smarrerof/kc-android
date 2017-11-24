@@ -9,6 +9,7 @@ import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.ViewSwitcher
 import com.sergiomarrero.dishr.R
 import com.sergiomarrero.dishr.adapter.DishRecyclerViewAdapter
 import com.sergiomarrero.dishr.model.Dish
@@ -22,6 +23,11 @@ import org.jetbrains.anko.coroutines.experimental.bg
 
 class DishListActivity : AppCompatActivity() {
 
+    enum class VIEW_INDEX(val index: Int) {
+        LOADING(0),
+        VIEW(1)
+    }
+
     companion object {
         val EXTRA_DISH = "EXTRA_DISH"
 
@@ -31,12 +37,15 @@ class DishListActivity : AppCompatActivity() {
         }
     }
 
+    val viewSwitcher by lazy { findViewById<ViewSwitcher>(R.id.dish_list_view_switcher) }
+    val recyclerView by lazy { findViewById<RecyclerView>(R.id.dish_list) }
     lateinit var dishes: List<Dish>
-    lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dish_list)
+
+        viewSwitcher.displayedChild = TableListActivity.VIEW_INDEX.LOADING.index
 
         // Get dishes from API
         async(UI) {
@@ -50,10 +59,10 @@ class DishListActivity : AppCompatActivity() {
             dishes = Dishes.toList()
 
             // Configure recyclerView
-            recyclerView = findViewById<RecyclerView>(R.id.dish_list)
             recyclerView.layoutManager = LinearLayoutManager(this@DishListActivity)
             recyclerView.itemAnimator = DefaultItemAnimator()
             setAdapter()
+            viewSwitcher.displayedChild = TableListActivity.VIEW_INDEX.VIEW.index
         }
     }
 

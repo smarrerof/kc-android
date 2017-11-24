@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.widget.ArrayAdapter
 import android.widget.ListView
+import android.widget.ViewSwitcher
 import com.sergiomarrero.dishr.R
 import com.sergiomarrero.dishr.model.Table
 import com.sergiomarrero.dishr.model.Tables
@@ -17,11 +18,19 @@ import org.jetbrains.anko.coroutines.experimental.bg
 
 class TableListActivity : AppCompatActivity() {
 
+    enum class VIEW_INDEX(val index: Int) {
+        LOADING(0),
+        VIEW(1)
+    }
+
+    val viewSwitcher by lazy { findViewById<ViewSwitcher>(R.id.table_list_view_switcher) }
     val listView by lazy { findViewById<ListView>(R.id.table_list) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_table_list)
+
+        viewSwitcher.displayedChild = VIEW_INDEX.LOADING.index
 
         // Get tables from API
         async(UI) {
@@ -32,6 +41,7 @@ class TableListActivity : AppCompatActivity() {
             task.await()
 
             setAdapter()
+            viewSwitcher.displayedChild = VIEW_INDEX.VIEW.index
         }
 
         // Handle click
