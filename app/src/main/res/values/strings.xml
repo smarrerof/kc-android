@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Dishr</string>
+    <string name="calculate_bill">Calcular cuenta</string>
+    <string name="clean_table">Limpiar mesa</string>
 </resources>

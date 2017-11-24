@@ -5,10 +5,9 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.ListView
@@ -101,6 +100,24 @@ class OrderActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.table_settings, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {
+        R.id.order_total -> {
+            calculateTotal()
+            true
+        }
+        R.id.order_empty -> {
+            cleanTable()
+            true
+        }
+        else -> super.onOptionsItemSelected(item)
+    }
+
+
     private fun setAdapter() {
         //listView.adapter = ArrayAdapter<OrderItem>(this, android.R.layout.simple_list_item_1, table.order.toArray())
         listView.adapter = object: ArrayAdapter<OrderItem>(this, R.layout.list_view_item_order, table.order.toArray()) {
@@ -126,5 +143,22 @@ class OrderActivity : AppCompatActivity() {
                 return view
             }
         }
+    }
+
+    private fun calculateTotal() {
+        val total = table.order.total()
+
+        AlertDialog.Builder(this@OrderActivity)
+                .setTitle(R.string.app_name)
+                .setMessage("${total} €")
+                .show()
+    }
+
+    private fun cleanTable() {
+        table.order.clear()
+        setAdapter()
+
+        Snackbar.make(findViewById(android.R.id.content), "La mesa ha sido vacia con éxito", Snackbar.LENGTH_LONG)
+                .show()
     }
 }

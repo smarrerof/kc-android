@@ -31,4 +31,10 @@ class Order(): Serializable {
     fun remove(position: Int) {
         items.removeAt(position)
     }
+
+    fun total() = items.map { it.dish.price }.sum()
+
+    fun clear() {
+        items = mutableListOf<OrderItem>()
+    }
 }
