@@ -22,4 +22,8 @@ object Tables: Serializable {
     fun add(mutableList: MutableList<Table>) {
         tables.addAll(mutableList)
     }
+
+    fun clear() {
+        tables = mutableListOf<Table>()
+    }
 }

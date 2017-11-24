@@ -23,4 +23,8 @@ object Dishes: Serializable {
     fun add(mutableList: MutableList<Dish>) {
         dishes.addAll(mutableList)
     }
+
+    fun clear() {
+        dishes = mutableListOf<Dish>()
+    }
 }

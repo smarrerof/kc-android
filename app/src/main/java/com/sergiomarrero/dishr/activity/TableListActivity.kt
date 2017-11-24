@@ -49,6 +49,9 @@ class TableListActivity : AppCompatActivity() {
     private fun downloadTables() {
         val repository = TableRepository()
         val tables = repository.get()
+
+        // TODO Improve this. Every time that the activity is created we are downloading the table list.
+        Tables.clear()
         Tables.add(tables)
     }
 }

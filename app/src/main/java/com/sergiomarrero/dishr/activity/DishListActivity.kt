@@ -61,6 +61,9 @@ class DishListActivity : AppCompatActivity() {
     private fun downloadDishes() {
         val repository = DishRepository()
         val dishes = repository.get()
+
+        // TODO Improve this. Every time that the activity is created we are downloading the dish list.
+        Dishes.clear()
         Dishes.add(dishes)
     }
 
