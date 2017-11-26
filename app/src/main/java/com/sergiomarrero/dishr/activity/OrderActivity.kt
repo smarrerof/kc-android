@@ -63,6 +63,7 @@ class OrderActivity : AppCompatActivity() {
                     .show()
             true
         }
+        listView.emptyView = findViewById(R.id.order_list_empty)
 
         // addButton events
         addDishButton.setOnClickListener { _ ->
