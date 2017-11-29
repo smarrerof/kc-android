@@ -3,6 +3,7 @@ package com.sergiomarrero.dishr.activity
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.ViewSwitcher
@@ -39,6 +40,8 @@ class TableListActivity : AppCompatActivity() {
             }
 
             task.await()
+
+            Log.v("Dishr", "TableListActivity")
 
             setAdapter()
             viewSwitcher.displayedChild = VIEW_INDEX.VIEW.index

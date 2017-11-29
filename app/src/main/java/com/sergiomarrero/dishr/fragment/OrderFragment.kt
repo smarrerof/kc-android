@@ -1,12 +1,12 @@
-package com.sergiomarrero.dishr.activity
+package com.sergiomarrero.dishr.fragment
 
-import android.content.Context
+import android.app.Fragment
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AlertDialog
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.*
 import android.widget.ArrayAdapter
@@ -14,81 +14,94 @@ import android.widget.ImageView
 import android.widget.ListView
 import android.widget.TextView
 import com.sergiomarrero.dishr.R
+import com.sergiomarrero.dishr.activity.DishListActivity
+import com.sergiomarrero.dishr.activity.OrderActivity
 import com.sergiomarrero.dishr.model.Dish
 import com.sergiomarrero.dishr.model.OrderItem
 import com.sergiomarrero.dishr.model.Table
 import com.sergiomarrero.dishr.model.Tables
 
 
-class OrderActivity : AppCompatActivity() {
+class OrderFragment: Fragment() {
 
     companion object {
-        val EXTRA_TABLE = "EXTRA_TABLE"
-        val REQUEST_DISH = 1
+        val ARG_TABLE_POSITION = "ARG_TABLE_POSITION"
 
-        fun intent(context: Context, position: Int): Intent {
-            val intent = Intent(context, OrderActivity::class.java)
-            intent.putExtra(EXTRA_TABLE, position)
-            return intent
+        fun newInstance(tablePosition: Int): OrderFragment {
+            val arguments = Bundle()
+            arguments.putInt(ARG_TABLE_POSITION, tablePosition)
+            val fragment = OrderFragment()
+            fragment.arguments = arguments
+
+            return fragment
         }
     }
 
-    val addDishButton by lazy { findViewById<FloatingActionButton>(R.id.add_dish_button) }
-    val listView by lazy { findViewById<ListView>(R.id.order_list) }
+    lateinit var root: View
+    lateinit var listView: ListView
+    lateinit var addDishButton: FloatingActionButton
     lateinit var table: Table
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_order)
+        setHasOptionsMenu(true)
+    }
 
-        // Get arguments from intent
-        val tableIndex = intent.getIntExtra(OrderActivity.EXTRA_TABLE, 0)
-        table = Tables[tableIndex]
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
-        setAdapter()
+        if (inflater != null) {
+            root = inflater.inflate(R.layout.fragment_order, container, false)
+            listView = root.findViewById(R.id.order_list)
+            addDishButton = root.findViewById(R.id.add_dish_button)
 
-        Log.v("Dishr", "OrderActivity")
+            // Get arguments from intent
+            val tableIndex = arguments?.getInt(ARG_TABLE_POSITION) ?: 0
+            table = Tables[tableIndex]
 
-        // listView events
-        listView.setOnItemLongClickListener { _, _, position, _ ->
-            AlertDialog.Builder(this)
-                    .setTitle("Borrar")
-                    .setMessage("¿Está seguro que desea borrar este elemento?")
+            setAdapter()
 
-                    .setPositiveButton(android.R.string.ok, { _, _ ->
-                        table.order.remove(position)
-                        setAdapter()
-                    })
-                    .setNegativeButton(android.R.string.cancel, { _, _ ->
+            // listView events
+            listView.setOnItemLongClickListener { _, _, position, _ ->
+                AlertDialog.Builder(activity)
+                        .setTitle("Borrar")
+                        .setMessage("¿Está seguro que desea borrar este elemento?")
 
-                    })
-                    .show()
-            true
+                        .setPositiveButton(android.R.string.ok, { _, _ ->
+                            table.order.remove(position)
+                            setAdapter()
+                        })
+                        .setNegativeButton(android.R.string.cancel, { _, _ ->
+
+                        })
+                        .show()
+                true
+            }
+            listView.emptyView = root.findViewById(R.id.order_list_empty)
+
+            // addButton events
+            addDishButton.setOnClickListener { _ ->
+                startActivityForResult(DishListActivity.intent(activity), OrderActivity.REQUEST_DISH)
+            }
         }
-        listView.emptyView = findViewById(R.id.order_list_empty)
 
-        // addButton events
-        addDishButton.setOnClickListener { _ ->
-            /*val dish = Dish("1", "Hamburguesa gourmet", 14.95f, "dish_01", listOf("1", "2", "3"))
-            table.order.add(dish, "")
-            setAdapter()*/
+        Log.v("Dishr", "OrderFragment")
 
-            startActivityForResult(DishListActivity.intent(this), OrderActivity.REQUEST_DISH)
-        }
+        return root
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == OrderActivity.REQUEST_DISH && resultCode == RESULT_OK) {
+        if (requestCode == OrderActivity.REQUEST_DISH && resultCode == AppCompatActivity.RESULT_OK) {
             // Get dish
             val dish = data?.getSerializableExtra(DishListActivity.EXTRA_DISH) as? Dish
             if (dish != null) {
                 // Get dish notes
-                val dialogView = layoutInflater.inflate(R.layout.dialog_add_dish, null)
+                val dialogView = activity.layoutInflater.inflate(R.layout.dialog_add_dish, null)
                 val dishNotes = dialogView.findViewById<TextView>(R.id.dish_notes)
 
-                AlertDialog.Builder(this)
+                AlertDialog.Builder(activity)
                         .setTitle("Añadir notas")
                         .setMessage("Introduce las notas del cliente")
                         .setView(dialogView)
@@ -103,12 +116,12 @@ class OrderActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_order, menu)
-        return true
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater?.inflate(R.menu.menu_order, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?) = when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem?)= when (item?.itemId) {
         R.id.order_total -> {
             calculateTotal()
             true
@@ -120,10 +133,8 @@ class OrderActivity : AppCompatActivity() {
         else -> super.onOptionsItemSelected(item)
     }
 
-
     private fun setAdapter() {
-        //listView.adapter = ArrayAdapter<OrderItem>(this, android.R.layout.simple_list_item_1, table.order.toArray())
-        listView.adapter = object: ArrayAdapter<OrderItem>(this, R.layout.list_view_item_order, table.order.toArray()) {
+        listView.adapter = object: ArrayAdapter<OrderItem>(activity, R.layout.list_view_item_order, table.order.toArray()) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
                 val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.list_view_item_order, parent, false)
 
@@ -151,7 +162,7 @@ class OrderActivity : AppCompatActivity() {
     private fun calculateTotal() {
         val total = table.order.total()
 
-        AlertDialog.Builder(this@OrderActivity)
+        AlertDialog.Builder(activity)
                 .setTitle(R.string.app_name)
                 .setMessage("${total} €")
                 .show()
@@ -161,7 +172,13 @@ class OrderActivity : AppCompatActivity() {
         table.order.clear()
         setAdapter()
 
-        Snackbar.make(findViewById(android.R.id.content), "La mesa ha sido vacia con éxito", Snackbar.LENGTH_LONG)
+        Snackbar.make(activity.findViewById(android.R.id.content), "La mesa ha sido vacia con éxito", Snackbar.LENGTH_LONG)
                 .show()
+    }
+
+
+    fun showTable(position: Int) {
+        table = Tables[position]
+        setAdapter()
     }
 }
