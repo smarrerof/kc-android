@@ -47,33 +47,14 @@ class DishListActivity : AppCompatActivity() {
 
         viewSwitcher.displayedChild = TableListActivity.VIEW_INDEX.LOADING.index
 
-        // Get dishes from API
-        async(UI) {
-            val task: Deferred<Unit> = bg {
-                downloadDishes()
-            }
+        // Get dishes locally
+        dishes = Dishes.toList()
 
-            task.await()
-
-            // Get dishes locally
-            dishes = Dishes.toList()
-
-            // Configure recyclerView
-            recyclerView.layoutManager = LinearLayoutManager(this@DishListActivity)
-            recyclerView.itemAnimator = DefaultItemAnimator()
-            setAdapter()
-            viewSwitcher.displayedChild = TableListActivity.VIEW_INDEX.VIEW.index
-        }
-    }
-
-
-    private fun downloadDishes() {
-        val repository = DishRepository()
-        val dishes = repository.get()
-
-        // TODO Improve this. Every time that the activity is created we are downloading the dish list.
-        Dishes.clear()
-        Dishes.add(dishes)
+        // Configure recyclerView
+        recyclerView.layoutManager = LinearLayoutManager(this@DishListActivity)
+        recyclerView.itemAnimator = DefaultItemAnimator()
+        setAdapter()
+        viewSwitcher.displayedChild = TableListActivity.VIEW_INDEX.VIEW.index
     }
 
 

@@ -49,18 +49,6 @@ class TableListFragment: Fragment() {
 
             viewSwitcher.displayedChild = TableListActivity.VIEW_INDEX.LOADING.index
 
-            // Get tables from API
-            /*async(UI) {
-                val task: Deferred<Unit> = bg {
-                    downloadTables()
-                }
-
-                task.await()
-
-                setAdapter()
-                viewSwitcher.displayedChild = TableListActivity.VIEW_INDEX.VIEW.index
-            }*/
-
             setAdapter()
             viewSwitcher.displayedChild = TableListActivity.VIEW_INDEX.VIEW.index
 
@@ -100,15 +88,6 @@ class TableListFragment: Fragment() {
         if (listener is OnTableSelectedListener) {
             onTableSelectedListener = listener
         }
-    }
-
-    private fun downloadTables() {
-        val repository = TableRepository()
-        val tables = repository.get()
-
-        // TODO Improve this. Every time that the activity is created we are downloading the table list.
-        Tables.clear()
-        Tables.add(tables)
     }
 
 

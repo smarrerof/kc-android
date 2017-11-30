@@ -11,17 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.TableListActivity">
-        </activity>
-        <activity android:name=".activity.DishListActivity" />
-        <activity android:name=".activity.OrderActivity" />
-        <activity android:name=".activity.MainActivity">
+
+        <activity android:name=".activity.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.TableListActivity" />
+        <activity android:name=".activity.OrderActivity" />
+        <activity android:name=".activity.DishListActivity" />
     </application>
 
 </manifest>

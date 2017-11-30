@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <FrameLayout
+        <fragment android:name="com.sergiomarrero.dishr.fragment.TableListFragment"
             android:id="@+id/table_list_fragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -21,7 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <FrameLayout
+        <fragment android:name="com.sergiomarrero.dishr.fragment.OrderFragment"
             android:id="@+id/order_fragment"
             android:layout_width="0dp"
             android:layout_height="0dp"
