@@ -23,6 +23,7 @@ class MainActivity: AppCompatActivity(), TableListFragment.OnTableSelectedListen
         }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -74,6 +75,22 @@ class MainActivity: AppCompatActivity(), TableListFragment.OnTableSelectedListen
                         })
                         .show()
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        if ((findViewById<FrameLayout>(R.id.fragment_container) == null) ||
+                fragmentManager.findFragmentById(R.id.fragment_container) as? TableListFragment != null) {
+
+            AlertDialog.Builder(this)
+                    .setTitle("Confirmación")
+                    .setMessage("¿Estás seguro de querer salir?")
+                    .setPositiveButton(android.R.string.yes, { _, _ -> finish() })
+                    .setNegativeButton(android.R.string.no, null)
+                    .create()
+                    .show()
+        } else {
+            super.onBackPressed()
         }
     }
 
