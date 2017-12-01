@@ -3,4 +3,6 @@
     <string name="calculate_bill">Calcular cuenta</string>
     <string name="clean_table">Limpiar mesa</string>
     <string name="empty_table">Mesa vacía</string>
+    <string name="dish_image_contentDescription">DishImage</string>
+    <string name="recycler_view_item_allerger_image_contentDescription">allergen</string>
 </resources>

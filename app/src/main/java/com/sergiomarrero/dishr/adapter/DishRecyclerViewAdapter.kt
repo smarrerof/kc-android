@@ -38,16 +38,6 @@ class DishRecyclerViewAdapter(val dishes: List<Dish>?): RecyclerView.Adapter<Dis
             name.text = dish.name
             price.text = "${dish.price}€"
 
-            val displayMetrics = itemView.context.resources.displayMetrics
-            allergens.viewTreeObserver.addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener {
-                override fun onGlobalLayout() {
-
-                    allergens.viewTreeObserver.removeOnGlobalLayoutListener(this)
-                    val width = allergens.measuredWidth / displayMetrics.density
-                    allergens.layoutManager = GridLayoutManager(itemView.context, (width / (32)).toInt())
-                }
-            })
-
             allergens.layoutManager = GridLayoutManager(itemView.context, 4)
             allergens.itemAnimator = DefaultItemAnimator()
             allergens.adapter = AllergenRecyclerViewAdapter(dish)

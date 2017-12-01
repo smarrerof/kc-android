@@ -5,4 +5,7 @@
     <dimen name="default_card_elevation">8dp</dimen>
     <dimen name="dish_image_max_width">150dp</dimen>
     <dimen name="default_small_margin">8dp</dimen>
+    <dimen name="card_dish_image_maxHeight">125dp</dimen>
+    <dimen name="recycler_view_item_allerger_image_maxHeight">32dp</dimen>
+    <dimen name="recycler_view_item_allerger_image_maxWidth">32dp</dimen>
 </resources>
