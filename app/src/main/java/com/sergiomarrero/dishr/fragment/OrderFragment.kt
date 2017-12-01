@@ -1,6 +1,8 @@
 package com.sergiomarrero.dishr.fragment
 
+import android.app.Activity
 import android.app.Fragment
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -38,6 +40,7 @@ class OrderFragment: Fragment() {
     }
 
     lateinit var root: View
+    private var onDishAddListener: OnAddDishListener? = null
     lateinit var listView: ListView
     lateinit var addDishButton: FloatingActionButton
     lateinit var table: Table
@@ -81,39 +84,13 @@ class OrderFragment: Fragment() {
 
             // addButton events
             addDishButton.setOnClickListener { _ ->
-                startActivityForResult(DishListActivity.intent(activity), OrderFragment.REQUEST_DISH)
+                onDishAddListener?.onAddDish()
             }
         }
 
         Log.v("Dishr", "OrderFragment")
 
         return root
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == OrderFragment.REQUEST_DISH && resultCode == AppCompatActivity.RESULT_OK) {
-            // Get dish
-            val dish = data?.getSerializableExtra(DishListActivity.EXTRA_DISH) as? Dish
-            if (dish != null) {
-                // Get dish notes
-                val dialogView = activity.layoutInflater.inflate(R.layout.dialog_add_dish, null)
-                val dishNotes = dialogView.findViewById<TextView>(R.id.dish_notes)
-
-                AlertDialog.Builder(activity)
-                        .setTitle("Añadir notas")
-                        .setMessage("Introduce las notas del cliente")
-                        .setView(dialogView)
-                        .setPositiveButton(android.R.string.ok, { _, _ ->
-                            table.order.add(dish, dishNotes.text.toString())
-                            setAdapter()
-                        })
-                        .show()
-
-            }
-
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -132,6 +109,23 @@ class OrderFragment: Fragment() {
         }
         else -> super.onOptionsItemSelected(item)
     }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        commonAttach(context)
+    }
+
+    @Suppress("OverridingDeprecatedMethod", "DEPRECATION")
+    override fun onAttach(activity: Activity?) {
+        super.onAttach(activity)
+        commonAttach(activity)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        onDishAddListener = null
+    }
+
 
     private fun setAdapter() {
         listView.adapter = object: ArrayAdapter<OrderItem>(activity, R.layout.list_view_item_order, table.order.toArray()) {
@@ -176,9 +170,25 @@ class OrderFragment: Fragment() {
                 .show()
     }
 
+    private fun commonAttach(listener: Any?) {
+        if (listener is OrderFragment.OnAddDishListener) {
+            onDishAddListener = listener
+        }
+    }
+
 
     fun showTable(position: Int) {
         table = Tables[position]
         setAdapter()
+    }
+
+    fun updateTable(dish: Dish, notes: String) {
+        table.order.add(dish, notes)
+        setAdapter()
+    }
+
+
+    interface OnAddDishListener {
+        fun onAddDish()
     }
 }
