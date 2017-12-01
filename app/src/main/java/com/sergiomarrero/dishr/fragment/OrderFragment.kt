@@ -67,8 +67,8 @@ class OrderFragment: Fragment() {
             // listView events
             listView.setOnItemLongClickListener { _, _, position, _ ->
                 AlertDialog.Builder(activity)
-                        .setTitle("Borrar")
-                        .setMessage("¿Está seguro que desea borrar este elemento?")
+                        .setTitle(getString(R.string.delete_dish_title))
+                        .setMessage(getString(R.string.delete_dish_text))
 
                         .setPositiveButton(android.R.string.ok, { _, _ ->
                             table.order.remove(position)
@@ -87,8 +87,6 @@ class OrderFragment: Fragment() {
                 onDishAddListener?.onAddDish()
             }
         }
-
-        Log.v("Dishr", "OrderFragment")
 
         return root
     }

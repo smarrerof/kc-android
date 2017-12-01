@@ -5,4 +5,8 @@
     <string name="empty_table">Mesa vacía</string>
     <string name="dish_image_contentDescription">DishImage</string>
     <string name="recycler_view_item_allerger_image_contentDescription">allergen</string>
+    <string name="add_notes_title">Añadir notas</string>
+    <string name="add_notes_text">Introduce las notas del cliente</string>
+    <string name="delete_dish_text">¿Está seguro que desea borrar este elemento?</string>
+    <string name="delete_dish_title">Borrar</string>
 </resources>

@@ -36,12 +36,9 @@ class TableListFragment: Fragment() {
 
             // Handle click
             listView.setOnItemClickListener { _, _, position, _ ->
-                Log.v("Dishr", "TableListFragment.listView.setOnItemClickListener")
                 onTableSelectedListener?.onTableSelected(position)
             }
         }
-
-        Log.v("Dishr", "TableListFragment")
 
         return root
     }

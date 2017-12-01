@@ -5,7 +5,6 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
-import android.util.Log
 import android.widget.FrameLayout
 import android.widget.TextView
 import com.sergiomarrero.dishr.R
@@ -29,8 +28,6 @@ class MainActivity: AppCompatActivity(), TableListFragment.OnTableSelectedListen
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Log.v("Dishr", "MainActivity")
-
         if (findViewById<FrameLayout>(R.id.fragment_container) != null) {
             if (fragmentManager.findFragmentById(R.id.fragment_container) == null) {
                 val fragment = TableListFragment.newInstance()
@@ -44,8 +41,6 @@ class MainActivity: AppCompatActivity(), TableListFragment.OnTableSelectedListen
     }
 
     override fun onTableSelected(position: Int) {
-        Log.v("Dishr", "MainActivity.onTableSelected")
-
         if (findViewById<FrameLayout>(R.id.order_fragment) != null) {
             val orderFragment = fragmentManager.findFragmentById(R.id.order_fragment) as OrderFragment
             orderFragment.showTable(position)
@@ -74,8 +69,8 @@ class MainActivity: AppCompatActivity(), TableListFragment.OnTableSelectedListen
                 val dishNotes = dialogView.findViewById<TextView>(R.id.dish_notes)
 
                 AlertDialog.Builder(this)
-                        .setTitle("Añadir notas")
-                        .setMessage("Introduce las notas del cliente")
+                        .setTitle(getString(R.string.add_notes_title))
+                        .setMessage(getString(R.string.add_notes_text))
                         .setView(dialogView)
                         .setPositiveButton(android.R.string.ok, { _, _ ->
                             /*table.order.add(dish, dishNotes.text.toString())
