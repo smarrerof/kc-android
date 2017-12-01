@@ -37,12 +37,14 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun downloadTables() {
         val repository = TableRepository()
         val tables = repository.get()
+        tables.clear()
         Tables.add(tables)
     }
 
     private fun downloadDishes() {
         val repository = DishRepository()
         val dishes = repository.get()
+        dishes.clear()
         Dishes.add(dishes)
     }
 }
