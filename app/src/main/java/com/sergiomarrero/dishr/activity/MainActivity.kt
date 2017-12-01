@@ -16,7 +16,6 @@ import com.sergiomarrero.dishr.model.Dish
 class MainActivity: AppCompatActivity(), TableListFragment.OnTableSelectedListener, OrderFragment.OnAddDishListener {
 
     companion object {
-
         fun intent(context: Context): Intent {
             val intent = Intent(context, MainActivity::class.java)
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -36,8 +35,6 @@ class MainActivity: AppCompatActivity(), TableListFragment.OnTableSelectedListen
                         .commit()
             }
         }
-
-
     }
 
     override fun onTableSelected(position: Int) {
@@ -73,14 +70,10 @@ class MainActivity: AppCompatActivity(), TableListFragment.OnTableSelectedListen
                         .setMessage(getString(R.string.add_notes_text))
                         .setView(dialogView)
                         .setPositiveButton(android.R.string.ok, { _, _ ->
-                            /*table.order.add(dish, dishNotes.text.toString())
-                            setAdapter()*/
                             updateTable(dish, dishNotes.text.toString())
                         })
                         .show()
-
             }
-
         }
     }
 
