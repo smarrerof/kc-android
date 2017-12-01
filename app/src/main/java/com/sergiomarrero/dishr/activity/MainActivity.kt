@@ -37,14 +37,12 @@ class MainActivity: AppCompatActivity(), TableListFragment.OnTableSelectedListen
         Log.v("Dishr", "MainActivity")
 
         if (findViewById<FrameLayout>(R.id.fragment_container) != null) {
-            //if (savedInstanceState == null) {
             if (fragmentManager.findFragmentById(R.id.fragment_container) == null) {
                 val fragment = TableListFragment.newInstance()
                 fragmentManager.beginTransaction()
                         .add(R.id.fragment_container, fragment)
                         .commit()
             }
-            //}
         }
 
 
@@ -53,8 +51,19 @@ class MainActivity: AppCompatActivity(), TableListFragment.OnTableSelectedListen
     override fun onTableSelected(position: Int) {
         Log.v("Dishr", "MainActivity.onTableSelected")
 
-        val orderFragment = fragmentManager.findFragmentById(R.id.order_fragment) as OrderFragment
+        /*val orderFragment = fragmentManager.findFragmentById(R.id.order_fragment) as OrderFragment
         if (orderFragment != null) {
+            orderFragment.showTable(position)
+        } else {
+            val fragment = OrderFragment.newInstance(position)
+            fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_, fragment)
+                    .addToBackStack(null)
+                    .commit()
+        }*/
+
+        if (findViewById<FrameLayout>(R.id.order_fragment) != null) {
+            val orderFragment = fragmentManager.findFragmentById(R.id.order_fragment) as OrderFragment
             orderFragment.showTable(position)
         } else {
             val fragment = OrderFragment.newInstance(position)
