@@ -9,4 +9,6 @@
     <string name="add_notes_text">Introduce las notas del cliente</string>
     <string name="delete_dish_text">¿Está seguro que desea borrar este elemento?</string>
     <string name="delete_dish_title">Borrar</string>
+    <string name="exit_title">Confirmación</string>
+    <string name="exit_text">¿Estás seguro de querer salir?</string>
 </resources>

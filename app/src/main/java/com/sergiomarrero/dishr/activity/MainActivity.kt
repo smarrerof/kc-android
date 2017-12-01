@@ -83,8 +83,8 @@ class MainActivity: AppCompatActivity(), TableListFragment.OnTableSelectedListen
                 fragmentManager.findFragmentById(R.id.fragment_container) as? TableListFragment != null) {
 
             AlertDialog.Builder(this)
-                    .setTitle("Confirmación")
-                    .setMessage("¿Estás seguro de querer salir?")
+                    .setTitle(getString(R.string.exit_title))
+                    .setMessage(getString(R.string.exit_text))
                     .setPositiveButton(android.R.string.yes, { _, _ -> finish() })
                     .setNegativeButton(android.R.string.no, null)
                     .create()
