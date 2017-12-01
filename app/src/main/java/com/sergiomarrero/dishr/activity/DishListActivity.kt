@@ -14,19 +14,9 @@ import com.sergiomarrero.dishr.R
 import com.sergiomarrero.dishr.adapter.DishRecyclerViewAdapter
 import com.sergiomarrero.dishr.model.Dish
 import com.sergiomarrero.dishr.model.Dishes
-import com.sergiomarrero.dishr.repository.DishRepository
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
 
 
 class DishListActivity : AppCompatActivity() {
-
-    enum class VIEW_INDEX(val index: Int) {
-        LOADING(0),
-        VIEW(1)
-    }
 
     companion object {
         val EXTRA_DISH = "EXTRA_DISH"
@@ -45,8 +35,6 @@ class DishListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dish_list)
 
-        viewSwitcher.displayedChild = TableListActivity.VIEW_INDEX.LOADING.index
-
         // Get dishes locally
         dishes = Dishes.toList()
 
@@ -54,7 +42,6 @@ class DishListActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this@DishListActivity)
         recyclerView.itemAnimator = DefaultItemAnimator()
         setAdapter()
-        viewSwitcher.displayedChild = TableListActivity.VIEW_INDEX.VIEW.index
     }
 
 

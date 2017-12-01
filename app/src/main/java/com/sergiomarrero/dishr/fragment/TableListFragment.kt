@@ -10,25 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ListView
-import android.widget.ViewSwitcher
 import com.sergiomarrero.dishr.R
-import com.sergiomarrero.dishr.activity.OrderActivity
-import com.sergiomarrero.dishr.activity.TableListActivity
 import com.sergiomarrero.dishr.model.Table
 import com.sergiomarrero.dishr.model.Tables
-import com.sergiomarrero.dishr.repository.TableRepository
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
 
 
 class TableListFragment: Fragment() {
-
-    enum class VIEW_INDEX(val index: Int) {
-        LOADING(0),
-        VIEW(1)
-    }
 
     companion object {
         fun newInstance() = TableListFragment()
@@ -36,7 +23,6 @@ class TableListFragment: Fragment() {
 
     lateinit var root: View
     private var onTableSelectedListener: OnTableSelectedListener? = null
-    lateinit var viewSwitcher: ViewSwitcher
     lateinit var listView: ListView
 
 
@@ -44,13 +30,9 @@ class TableListFragment: Fragment() {
 
         if (inflater != null) {
             root = inflater.inflate(R.layout.fragment_table_list, container, false)
-            viewSwitcher = root.findViewById<ViewSwitcher>(R.id.table_list_view_switcher)
             listView = root.findViewById<ListView>(R.id.table_list)
 
-            viewSwitcher.displayedChild = TableListActivity.VIEW_INDEX.LOADING.index
-
             setAdapter()
-            viewSwitcher.displayedChild = TableListActivity.VIEW_INDEX.VIEW.index
 
             // Handle click
             listView.setOnItemClickListener { _, _, position, _ ->

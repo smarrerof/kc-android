@@ -6,9 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.ImageView
-
 import android.widget.TextView
 import com.sergiomarrero.dishr.R
 import com.sergiomarrero.dishr.model.Dish

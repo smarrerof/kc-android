@@ -15,7 +15,6 @@ import android.widget.ListView
 import android.widget.TextView
 import com.sergiomarrero.dishr.R
 import com.sergiomarrero.dishr.activity.DishListActivity
-import com.sergiomarrero.dishr.activity.OrderActivity
 import com.sergiomarrero.dishr.model.Dish
 import com.sergiomarrero.dishr.model.OrderItem
 import com.sergiomarrero.dishr.model.Table
@@ -25,6 +24,7 @@ import com.sergiomarrero.dishr.model.Tables
 class OrderFragment: Fragment() {
 
     companion object {
+        val REQUEST_DISH = 1
         val ARG_TABLE_POSITION = "ARG_TABLE_POSITION"
 
         fun newInstance(tablePosition: Int): OrderFragment {
@@ -81,7 +81,7 @@ class OrderFragment: Fragment() {
 
             // addButton events
             addDishButton.setOnClickListener { _ ->
-                startActivityForResult(DishListActivity.intent(activity), OrderActivity.REQUEST_DISH)
+                startActivityForResult(DishListActivity.intent(activity), OrderFragment.REQUEST_DISH)
             }
         }
 
@@ -93,7 +93,7 @@ class OrderFragment: Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == OrderActivity.REQUEST_DISH && resultCode == AppCompatActivity.RESULT_OK) {
+        if (requestCode == OrderFragment.REQUEST_DISH && resultCode == AppCompatActivity.RESULT_OK) {
             // Get dish
             val dish = data?.getSerializableExtra(DishListActivity.EXTRA_DISH) as? Dish
             if (dish != null) {

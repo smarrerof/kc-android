@@ -1,22 +1,14 @@
 package com.sergiomarrero.dishr.activity
 
-import android.app.Fragment
 import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.FrameLayout
 import com.sergiomarrero.dishr.R
 import com.sergiomarrero.dishr.fragment.OrderFragment
 import com.sergiomarrero.dishr.fragment.TableListFragment
-import com.sergiomarrero.dishr.model.Tables
-import com.sergiomarrero.dishr.repository.TableRepository
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
 
 
 class MainActivity: AppCompatActivity(), TableListFragment.OnTableSelectedListener {
@@ -50,17 +42,6 @@ class MainActivity: AppCompatActivity(), TableListFragment.OnTableSelectedListen
 
     override fun onTableSelected(position: Int) {
         Log.v("Dishr", "MainActivity.onTableSelected")
-
-        /*val orderFragment = fragmentManager.findFragmentById(R.id.order_fragment) as OrderFragment
-        if (orderFragment != null) {
-            orderFragment.showTable(position)
-        } else {
-            val fragment = OrderFragment.newInstance(position)
-            fragmentManager.beginTransaction()
-                    .replace(R.id.fragment_, fragment)
-                    .addToBackStack(null)
-                    .commit()
-        }*/
 
         if (findViewById<FrameLayout>(R.id.order_fragment) != null) {
             val orderFragment = fragmentManager.findFragmentById(R.id.order_fragment) as OrderFragment
